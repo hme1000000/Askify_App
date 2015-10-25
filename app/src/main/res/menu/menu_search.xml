@@ -2,12 +2,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="app.com.example.hussein.askify_app.HomeActivity">
-    <item android:id="@+id/action_settings" android:title="@string/action_settings"
-        android:orderInCategory="100" app:showAsAction="never" />
     <item
         android:title="Search"
-        android:id="@+id/action_search"
+        android:id="@+id/action_searchView"
         android:icon="@drawable/ic_search_white_24dp"
-        app:showAsAction = "always"/>
+        app:showAsAction = "always"
+        app:actionViewClass="android.widget.SearchView"/>
 
 </menu>

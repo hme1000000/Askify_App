@@ -23,15 +23,17 @@
             android:label="@string/title_activity_home"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar" >
-            <meta-data
-                android:name="android.app.default_searchable"
-                android:value=".SearchResultsActivity" />
+            <meta-data android:name="android.app.default_searchable"
+                android:value=".SearchableActivity" />
+
+
         </activity>
         <activity
             android:name=".SearchableActivity"
             android:label="@string/title_activity_searchable"
             android:parentActivityName=".HomeActivity"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
