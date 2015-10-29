@@ -78,6 +78,8 @@ public class SearchableActivity extends AppCompatActivity {
 
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
+            myTask mytask = new myTask();
+            mytask.execute("Cairo","metric",query);
 
             //ArrayList<String> resultArray = new ArrayList<String>();
 
