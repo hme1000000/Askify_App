@@ -11,10 +11,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class SearchableActivity extends AppCompatActivity {
+
+    public static ArrayAdapter<String> myAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,10 +40,26 @@ public class SearchableActivity extends AppCompatActivity {
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+        List<String> myArray = new ArrayList<String>();
+
+
+
+
+        myAdapter = new ArrayAdapter<String>(this,
+                R.layout.list_item_forecast,
+                R.id.list_item_forecast_textView,
+                myArray);
+
+        ListView list = (ListView)findViewById(R.id.listView_forecast);
+        list.setAdapter(myAdapter);
         onSearchRequested();
         handleIntent(getIntent());
 
     }
+
+
 
 
     @Override
@@ -54,9 +78,16 @@ public class SearchableActivity extends AppCompatActivity {
 
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
-            TextView txt = (TextView)findViewById(R.id.result);
-            txt.setText(query);
-            //use the query to search your data somehow
+
+            //ArrayList<String> resultArray = new ArrayList<String>();
+
+            /*for (String element:myArray
+                 ) {
+                if(query.equals(element))
+                    resultArray.add(element);
+            }*/
+
+
         }
     }
 
