@@ -7,6 +7,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -26,6 +31,7 @@ public class AllFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    public static ArrayAdapter<String> myAdapter;
 
     private OnFragmentInteractionListener mListener;
 
@@ -64,7 +70,29 @@ public class AllFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_all, container, false);
+        View rootView =  inflater.inflate(R.layout.fragment_all, container, false);
+
+        List<String> myArray = new ArrayList<String>();
+        myAdapter = new ArrayAdapter<String>(getActivity(),
+                R.layout.list_item_forecast,
+                R.id.list_item_forecast_textView,
+                myArray);
+
+        ListView list = (ListView)rootView.findViewById(R.id.listView_All);
+        list.setAdapter(myAdapter);
+
+        return rootView;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        getAll();
+    }
+
+    private void getAll() {
+        myTask mytask = new myTask();
+        mytask.execute("Cairo", "metric", SearchableActivity.inputQuery);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

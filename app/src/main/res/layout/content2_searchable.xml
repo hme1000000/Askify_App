@@ -1,12 +1,9 @@
 <fragment xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/fragment_all"
-    android:name="app.com.example.hussein.askify_app.AllFragment"
+    android:id="@+id/fragment_question"
+    android:name="app.com.example.hussein.askify_app.QuestionFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:layout="@layout/fragment_all" />
-
-
-
+    tools:layout="@layout/fragment_question" />

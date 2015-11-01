@@ -22,6 +22,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
 
@@ -29,32 +30,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class SearchableActivity extends AppCompatActivity implements
-        ActionBar.TabListener {
+public class SearchableActivity extends AppCompatActivity {
 
-    public static ArrayAdapter<String> myAdapter;
+
+
     private ViewPager viewPager;
     private TabsPagerAdapter mAdapter;
     private ActionBar actionBar;
+    public static String inputQuery;
     // Tab titles
 
 
 
 
-    @Override
-    public void onTabReselected(ActionBar.Tab tab, android.support.v4.app.FragmentTransaction ft) {
-    }
 
-    @Override
-    public void onTabSelected(ActionBar.Tab tab, android.support.v4.app.FragmentTransaction ft) {
-        // on tab selected
-        // show respected fragment view
-        viewPager.setCurrentItem(tab.getPosition());
-    }
-
-    @Override
-    public void onTabUnselected(ActionBar.Tab tab, android.support.v4.app.FragmentTransaction ft) {
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,20 +81,39 @@ public class SearchableActivity extends AppCompatActivity implements
 
         PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         tabs.setViewPager(viewPager);
+        tabs.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+                Toast.makeText(SearchableActivity.this, "Filtered by: " + position, Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
 
-        List<String> myArray = new ArrayList<String>();
 
 
 
 
-        myAdapter = new ArrayAdapter<String>(this,
-                R.layout.list_item_forecast,
-                R.id.list_item_forecast_textView,
-                myArray);
 
-        ListView list = (ListView)findViewById(R.id.listView_forecast);
-        list.setAdapter(myAdapter);
+
+
+
+
+
+
+
+
         onSearchRequested();
         handleIntent(getIntent());
 
@@ -163,8 +171,12 @@ public class SearchableActivity extends AppCompatActivity implements
 
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
-            myTask mytask = new myTask();
-            mytask.execute("Cairo","metric",query);
+            inputQuery = query;
+            //myTask mytask = new myTask();
+            //mytask.execute("Cairo", "metric", query);
+
+            //QuestionTask task = new QuestionTask();
+            //task.execute("Cairo", "metric", query);
 
             //ArrayList<String> resultArray = new ArrayList<String>();
 

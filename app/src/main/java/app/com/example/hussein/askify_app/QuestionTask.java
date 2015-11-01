@@ -25,7 +25,7 @@ import java.util.ArrayList;
 /**
  * Created by hussein on 19/10/15.
  */
-public class myTask extends AsyncTask<String,Void,ArrayList<String>> {
+public class QuestionTask extends AsyncTask<String,Void,ArrayList<String>> {
     private final String Log_Tag = myTask.class.getSimpleName();
 
     String forecastJsonresult = null;
@@ -134,7 +134,7 @@ public class myTask extends AsyncTask<String,Void,ArrayList<String>> {
         }
 
         for (String element:resultStrs
-             ) {if(element.contains(keyword))
+                ) {if(element.contains("Mon"))
 
             searchresult.add(element);
 
@@ -238,9 +238,9 @@ public class myTask extends AsyncTask<String,Void,ArrayList<String>> {
     @Override
     protected void onPostExecute(ArrayList<String> strings) {
         if(strings != null){
-            AllFragment.myAdapter.clear();
+            QuestionFragment.questionAdapter.clear();
             for (String result:strings) {
-                AllFragment.myAdapter.add(result);
+                QuestionFragment.questionAdapter.add(result);
             }
         }
     }

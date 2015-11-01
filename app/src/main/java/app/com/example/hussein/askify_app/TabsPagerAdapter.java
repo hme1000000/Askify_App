@@ -25,7 +25,7 @@ public class TabsPagerAdapter extends FragmentStatePagerAdapter {
                 return  new AllFragment();
             case 1:
                 // Games fragment activity
-                return new QuestionFragment();
+                return QuestionFragment.newInstance(index+1);
             case 2:
                 // Movies fragment activity
                 return new AnswerFragment();

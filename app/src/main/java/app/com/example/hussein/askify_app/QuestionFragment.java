@@ -7,6 +7,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -24,8 +29,9 @@ public class QuestionFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
+    private int mParam1;
     private String mParam2;
+    public  static ArrayAdapter<String> questionAdapter;
 
     private OnFragmentInteractionListener mListener;
 
@@ -34,15 +40,13 @@ public class QuestionFragment extends Fragment {
      * this fragment using the provided parameters.
      *
      * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment QuestionFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static QuestionFragment newInstance(String param1, String param2) {
+    public static QuestionFragment newInstance(int  param1) {
         QuestionFragment fragment = new QuestionFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putInt(ARG_PARAM1, param1);
         fragment.setArguments(args);
         return fragment;
     }
@@ -55,7 +59,7 @@ public class QuestionFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam1 = getArguments().getInt(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
@@ -63,8 +67,40 @@ public class QuestionFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        List<String> questionArray = new ArrayList<>();
+        questionArray.add("kjnjkjkbjk");
+        questionArray.add("kjnjkjkbjk");
+        questionArray.add("kjnjkjkbjk");
+        questionArray.add("kjnjkjkbjk");
+        questionArray.add("kjnjkjkbjk");
+        questionArray.add("kjnjkjkbjk");
+        questionArray.add("kjnjkjkbjk");
+        questionArray.add("kjnjkjkbjk");
+        questionAdapter = new ArrayAdapter<String>(getActivity(),
+                R.layout.list_item_question,
+                R.id.list_item_question_textView,
+                questionArray);
+
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_question, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_question, container, false);
+
+        ListView questionList = (ListView)getActivity().findViewById(R.id.listView_question);
+        questionList.setAdapter(QuestionFragment.questionAdapter);
+
+        return rootView;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        getQuestions();
+    }
+
+    private void getQuestions() {
+        QuestionTask task = new QuestionTask();
+        task.execute("Cairo", "metric", SearchableActivity.inputQuery);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
