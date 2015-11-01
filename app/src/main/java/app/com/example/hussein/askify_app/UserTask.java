@@ -25,7 +25,7 @@ import java.util.ArrayList;
 /**
  * Created by hussein on 19/10/15.
  */
-public class QuestionTask extends AsyncTask<String,Void,ArrayList<String>> {
+public class UserTask extends AsyncTask<String,Void,ArrayList<String>> {
     private final String Log_Tag = myTask.class.getSimpleName();
 
     String forecastJsonresult = null;
@@ -134,7 +134,7 @@ public class QuestionTask extends AsyncTask<String,Void,ArrayList<String>> {
         }
 
         for (String element:resultStrs
-                ) {if(element.contains("Nov"))
+                ) {if(element.contains("Cairo"))
 
             searchresult.add(element);
 
@@ -169,7 +169,7 @@ public class QuestionTask extends AsyncTask<String,Void,ArrayList<String>> {
             // http://openweathermap.org/API#forecast
             //URL url = new URL("http://api.openweathermap.org/data/2.5/forecast/daily?q=94043&APPID=1c0c481674277948e7d4187513d3bc5b&mode=json&units=metric&cnt=7");
 //URL url = new URL("https://randomuser.me/api/");
-            String urlString = "http://api.openweathermap.org/data/2.5/forecast/daily?";
+            String urlString = "http://openweathermap.org/data/2.5/forecast/daily?";
             Uri urlBuild = Uri.parse(urlString).buildUpon()
                     .appendQueryParameter("q",params[0])
                     .appendQueryParameter("APPID",key)
@@ -238,9 +238,16 @@ public class QuestionTask extends AsyncTask<String,Void,ArrayList<String>> {
     @Override
     protected void onPostExecute(ArrayList<String> strings) {
         if(strings != null){
-            QuestionFragment.questionAdapter.clear();
+            UsersFragment.usersAdapter.clear();
             for (String result:strings) {
-                QuestionFragment.questionAdapter.add(result);
+                UsersFragment.usersAdapter.add(result);
+            }
+        }
+        else {
+            UsersFragment.usersAdapter.clear();
+            for(int i=0;i<10;i++)
+            {
+                UsersFragment.usersAdapter.add("Nothing");
             }
         }
     }

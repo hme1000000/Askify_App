@@ -69,24 +69,15 @@ public class QuestionFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         List<String> questionArray = new ArrayList<>();
-        questionArray.add("kjnjkjkbjk");
-        questionArray.add("kjnjkjkbjk");
-        questionArray.add("kjnjkjkbjk");
-        questionArray.add("kjnjkjkbjk");
-        questionArray.add("kjnjkjkbjk");
-        questionArray.add("kjnjkjkbjk");
-        questionArray.add("kjnjkjkbjk");
-        questionArray.add("kjnjkjkbjk");
         questionAdapter = new ArrayAdapter<String>(getActivity(),
                 R.layout.list_item_question,
                 R.id.list_item_question_textView,
                 questionArray);
 
-
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_question, container, false);
 
-        ListView questionList = (ListView)getActivity().findViewById(R.id.listView_question);
+        ListView questionList = (ListView)rootView.findViewById(R.id.listView_question);
         questionList.setAdapter(QuestionFragment.questionAdapter);
 
         return rootView;

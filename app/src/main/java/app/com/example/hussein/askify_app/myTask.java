@@ -134,7 +134,7 @@ public class myTask extends AsyncTask<String,Void,ArrayList<String>> {
         }
 
         for (String element:resultStrs
-             ) {if(element.contains(keyword))
+             ) {if(element.contains("Cairo"))
 
             searchresult.add(element);
 
@@ -169,7 +169,7 @@ public class myTask extends AsyncTask<String,Void,ArrayList<String>> {
             // http://openweathermap.org/API#forecast
             //URL url = new URL("http://api.openweathermap.org/data/2.5/forecast/daily?q=94043&APPID=1c0c481674277948e7d4187513d3bc5b&mode=json&units=metric&cnt=7");
 //URL url = new URL("https://randomuser.me/api/");
-            String urlString = "http://api.openweathermap.org/data/2.5/forecast/daily?";
+            String urlString = "http://openweathermap.org/data/2.5/forecast/daily?";
             Uri urlBuild = Uri.parse(urlString).buildUpon()
                     .appendQueryParameter("q",params[0])
                     .appendQueryParameter("APPID",key)
@@ -241,6 +241,13 @@ public class myTask extends AsyncTask<String,Void,ArrayList<String>> {
             AllFragment.myAdapter.clear();
             for (String result:strings) {
                 AllFragment.myAdapter.add(result);
+            }
+        }
+        else {
+            AllFragment.myAdapter.clear();
+            for(int i=0;i<10;i++)
+            {
+                AllFragment.myAdapter.add("Nothing");
             }
         }
     }

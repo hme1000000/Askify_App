@@ -172,6 +172,8 @@ public class SearchableActivity extends AppCompatActivity {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
             inputQuery = query;
+            UserTask u = new UserTask();
+            u.execute("Cairo","metric",query);
             //myTask mytask = new myTask();
             //mytask.execute("Cairo", "metric", query);
 
