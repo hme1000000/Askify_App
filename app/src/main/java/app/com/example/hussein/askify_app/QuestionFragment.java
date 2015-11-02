@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +33,7 @@ public class QuestionFragment extends Fragment {
     private int mParam1;
     private String mParam2;
     public  static ArrayAdapter<String> questionAdapter;
+    public static TextView questionText;
 
     private OnFragmentInteractionListener mListener;
 
@@ -79,6 +81,7 @@ public class QuestionFragment extends Fragment {
 
         ListView questionList = (ListView)rootView.findViewById(R.id.listView_question);
         questionList.setAdapter(QuestionFragment.questionAdapter);
+        questionText = (TextView)rootView.findViewById(R.id.question_textView);
 
         return rootView;
     }

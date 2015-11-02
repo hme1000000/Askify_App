@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +35,7 @@ public class UsersFragment extends Fragment {
     public static ArrayAdapter<String> usersAdapter;
 
     private OnFragmentInteractionListener mListener;
+    public static TextView usersText;
 
     /**
      * Use this factory method to create a new instance of
@@ -80,6 +82,7 @@ public class UsersFragment extends Fragment {
 
         ListView list = (ListView)rootView.findViewById(R.id.listView_users);
         list.setAdapter(usersAdapter);
+        usersText = (TextView)rootView.findViewById(R.id.users_textView);
 
         return rootView;
     }

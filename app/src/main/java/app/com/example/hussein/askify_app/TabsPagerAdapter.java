@@ -10,7 +10,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
  */
 public class TabsPagerAdapter extends FragmentStatePagerAdapter {
 
-    private String[] tabs = { "All", "Questions", "Answers","Users","Unsolved" };
+    public static String[] tabs = { "All", "Questions", "Answers","Users","Unsolved" };
 
     public TabsPagerAdapter(FragmentManager fm) {
         super(fm);

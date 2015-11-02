@@ -8,7 +8,6 @@ import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.text.format.Time;
 import android.util.Log;
-import android.view.View;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,7 +25,7 @@ import java.util.ArrayList;
 /**
  * Created by hussein on 19/10/15.
  */
-public class UnsolvedTask extends AsyncTask<String,Void,ArrayList<String>> {
+public class AllTask extends AsyncTask<String,Void,ArrayList<String>> {
     private final String Log_Tag = myTask.class.getSimpleName();
 
     String forecastJsonresult = null;
@@ -135,7 +134,7 @@ public class UnsolvedTask extends AsyncTask<String,Void,ArrayList<String>> {
         }
 
         for (String element:resultStrs
-                ) {if(element.contains("Fri"))
+                ) {if(element.contains(keyword))
 
             searchresult.add(element);
 
@@ -237,17 +236,30 @@ public class UnsolvedTask extends AsyncTask<String,Void,ArrayList<String>> {
     }
 
     @Override
+    protected void onPreExecute() {
+        AllFragment.myAdapter.clear();
+    }
+
+    @Override
+    protected void onProgressUpdate(Void... values) {
+        //AllFragment.myAdapter.clear();
+        //AllFragment.allText.setText("Loading...");
+    }
+
+    @Override
     protected void onPostExecute(ArrayList<String> strings) {
         if(strings != null){
-            UnsolvedFragment.unsolvedText.setVisibility(View.INVISIBLE);
-            UnsolvedFragment.unsolvedAdapter.clear();
+            SearchableActivity.allSearch.clear();
             for (String result:strings) {
-                UnsolvedFragment.unsolvedAdapter.add(result);
+                SearchableActivity.allSearch.add(result);
             }
         }
         else {
-            UnsolvedFragment.unsolvedAdapter.clear();
-            UnsolvedFragment.unsolvedText.setText("No matched Unsolved Question found");
+            AllFragment.myAdapter.clear();
+            for(int i=0;i<10;i++)
+            {
+                AllFragment.myAdapter.add("Nothing");
+            }
         }
     }
 }

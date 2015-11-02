@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +33,7 @@ public class AllFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     public static ArrayAdapter<String> myAdapter;
+    public static TextView allText;
 
     private OnFragmentInteractionListener mListener;
 
@@ -80,13 +82,17 @@ public class AllFragment extends Fragment {
 
         ListView list = (ListView)rootView.findViewById(R.id.listView_All);
         list.setAdapter(myAdapter);
+        allText = (TextView)rootView.findViewById(R.id.all_textView);
 
         return rootView;
     }
 
+
+
     @Override
     public void onStart() {
         super.onStart();
+
         getAll();
     }
 

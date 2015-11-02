@@ -8,6 +8,7 @@ import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.text.format.Time;
 import android.util.Log;
+import android.view.View;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -238,10 +239,15 @@ public class QuestionTask extends AsyncTask<String,Void,ArrayList<String>> {
     @Override
     protected void onPostExecute(ArrayList<String> strings) {
         if(strings != null){
+            QuestionFragment.questionText.setVisibility(View.INVISIBLE);
             QuestionFragment.questionAdapter.clear();
             for (String result:strings) {
                 QuestionFragment.questionAdapter.add(result);
             }
+        }
+        else {
+            QuestionFragment.questionAdapter.clear();
+            QuestionFragment.questionText.setText("No matched Question found");
         }
     }
 }

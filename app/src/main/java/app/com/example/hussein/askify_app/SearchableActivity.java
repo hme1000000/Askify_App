@@ -1,6 +1,7 @@
 package app.com.example.hussein.askify_app;
 
 import android.app.Dialog;
+import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.SearchManager;
 import android.content.Context;
@@ -16,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.ArrayAdapter;
@@ -35,9 +37,10 @@ public class SearchableActivity extends AppCompatActivity {
 
 
     private ViewPager viewPager;
-    private TabsPagerAdapter mAdapter;
+    //private TabsPagerAdapter mAdapter;
     private ActionBar actionBar;
     public static String inputQuery;
+    public static ArrayList<String> allSearch = new ArrayList<>();
     // Tab titles
 
 
@@ -90,7 +93,9 @@ public class SearchableActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
 
-                Toast.makeText(SearchableActivity.this, "Filtered by: " + position, Toast.LENGTH_SHORT).show();
+                //onSearchRequested();
+
+                Toast.makeText(SearchableActivity.this, "Filtered by: " + TabsPagerAdapter.tabs[position], Toast.LENGTH_SHORT).show();
 
             }
 
@@ -114,7 +119,7 @@ public class SearchableActivity extends AppCompatActivity {
 
 
 
-        onSearchRequested();
+        //onSearchRequested();
         handleIntent(getIntent());
 
         /*viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -139,13 +144,33 @@ public class SearchableActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_search, menu);
 
+        //SearchManager searchManager = (SearchManager)getSystemService(Context.SEARCH_SERVICE);
+        //SearchView searchView = (SearchView)menu.findItem(R.id.action_searchView).getActionView();
+        //searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        //searchView.setIconifiedByDefault(false);
+        //inputQuery = searchView.getQuery().toString();
 
-
-
-
+        return true;
+    }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_searchView) {
+            //startActivity(new Intent(this,SearchableActivity.class));
+            onSearchRequested();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    /*@Override
     protected void onResume() {
         onSearchRequested();
         super.onResume();
@@ -157,9 +182,11 @@ public class SearchableActivity extends AppCompatActivity {
         super.onPause();
     }
 
-
-
-
+    @Override
+    public void setFinishOnTouchOutside(boolean finish) {
+        onSearchRequested();
+        super.setFinishOnTouchOutside(finish);
+    }*/
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -168,12 +195,16 @@ public class SearchableActivity extends AppCompatActivity {
     }
 
     private void handleIntent(Intent intent) {
-
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
             inputQuery = query;
-            UserTask u = new UserTask();
-            u.execute("Cairo","metric",query);
+            //AllTask task = new AllTask();
+            //task.execute("Cairo", "metric", query);
+
+            //startActivity(new Intent(this,SearchableActivity.class));
+            //AllFragment.getAll();
+            //UserTask u = new UserTask();
+            //u.execute("Cairo","metric",query);
             //myTask mytask = new myTask();
             //mytask.execute("Cairo", "metric", query);
 

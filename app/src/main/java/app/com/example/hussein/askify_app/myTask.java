@@ -8,6 +8,8 @@ import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.text.format.Time;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -134,7 +136,7 @@ public class myTask extends AsyncTask<String,Void,ArrayList<String>> {
         }
 
         for (String element:resultStrs
-             ) {if(element.contains("Cairo"))
+             ) {if(element.contains(keyword))
 
             searchresult.add(element);
 
@@ -236,8 +238,16 @@ public class myTask extends AsyncTask<String,Void,ArrayList<String>> {
     }
 
     @Override
+    protected void onPreExecute() {
+        AllFragment.myAdapter.clear();
+    }
+
+
+
+    @Override
     protected void onPostExecute(ArrayList<String> strings) {
         if(strings != null){
+            AllFragment.allText.setVisibility(View.INVISIBLE);
             AllFragment.myAdapter.clear();
             for (String result:strings) {
                 AllFragment.myAdapter.add(result);
@@ -245,10 +255,7 @@ public class myTask extends AsyncTask<String,Void,ArrayList<String>> {
         }
         else {
             AllFragment.myAdapter.clear();
-            for(int i=0;i<10;i++)
-            {
-                AllFragment.myAdapter.add("Nothing");
-            }
+            AllFragment.allText.setText("No matched Result found");
         }
     }
 }

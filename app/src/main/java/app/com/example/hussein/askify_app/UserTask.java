@@ -8,6 +8,7 @@ import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.text.format.Time;
 import android.util.Log;
+import android.view.View;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -238,6 +239,7 @@ public class UserTask extends AsyncTask<String,Void,ArrayList<String>> {
     @Override
     protected void onPostExecute(ArrayList<String> strings) {
         if(strings != null){
+            UsersFragment.usersText.setVisibility(View.INVISIBLE);
             UsersFragment.usersAdapter.clear();
             for (String result:strings) {
                 UsersFragment.usersAdapter.add(result);
@@ -245,10 +247,7 @@ public class UserTask extends AsyncTask<String,Void,ArrayList<String>> {
         }
         else {
             UsersFragment.usersAdapter.clear();
-            for(int i=0;i<10;i++)
-            {
-                UsersFragment.usersAdapter.add("Nothing");
-            }
+            UsersFragment.usersText.setText("No matched Result found");
         }
     }
 }
