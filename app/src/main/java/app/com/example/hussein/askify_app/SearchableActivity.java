@@ -41,6 +41,13 @@ public class SearchableActivity extends AppCompatActivity {
     private ActionBar actionBar;
     public static String inputQuery;
     public static ArrayList<String> allSearch = new ArrayList<>();
+
+    public static ArrayList<String> allResults = new ArrayList<>();
+    public static ArrayList<String> questionResults = new ArrayList<>();
+    public static ArrayList<String> answerResults = new ArrayList<>();
+    public static ArrayList<String> usersResults = new ArrayList<>();
+    public static ArrayList<String> unsolvedResults = new ArrayList<>();
+    public static boolean finished = false;
     // Tab titles
 
 
@@ -55,7 +62,6 @@ public class SearchableActivity extends AppCompatActivity {
         setContentView(R.layout.activity_searchable);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -198,6 +204,8 @@ public class SearchableActivity extends AppCompatActivity {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
             inputQuery = query;
+            SearchTask task = new SearchTask();
+            task.execute(query);
             //AllTask task = new AllTask();
             //task.execute("Cairo", "metric", query);
 

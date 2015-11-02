@@ -144,6 +144,12 @@ public class AnswerTask extends AsyncTask<String,Void,ArrayList<String>> {
 
 
 
+        resultStrs.clear();
+        while (SearchableActivity.finished == false);
+        for (String element:
+             SearchableActivity.answerResults) {
+            resultStrs.add(element);
+        }
 
         return resultStrs;
 
