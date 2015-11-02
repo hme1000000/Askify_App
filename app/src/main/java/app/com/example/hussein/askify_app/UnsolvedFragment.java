@@ -95,7 +95,7 @@ public class UnsolvedFragment extends Fragment {
 
     private void getUnsolved() {
         UnsolvedTask task = new UnsolvedTask();
-        task.execute("Cairo", "metric", SearchableActivity.inputQuery);
+        task.execute(SearchableActivity.inputQuery);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

@@ -93,8 +93,8 @@ public class QuestionFragment extends Fragment {
     }
 
     private void getQuestions() {
-        QuestionTask task = new QuestionTask();
-        task.execute("Cairo", "metric", SearchableActivity.inputQuery);
+        QuestionsTask task = new QuestionsTask();
+        task.execute(SearchableActivity.inputQuery);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

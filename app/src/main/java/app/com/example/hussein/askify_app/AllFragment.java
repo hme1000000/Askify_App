@@ -98,7 +98,7 @@ public class AllFragment extends Fragment {
 
     private void getAll() {
         myTask mytask = new myTask();
-        mytask.execute("Cairo", "metric", SearchableActivity.inputQuery);
+        mytask.execute(SearchableActivity.inputQuery);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

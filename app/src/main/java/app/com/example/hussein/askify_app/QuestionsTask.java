@@ -24,14 +24,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 
-public class UnsolvedTask extends AsyncTask<String,Void,ArrayList<String>> {
+public class QuestionsTask extends AsyncTask<String,Void,ArrayList<String>> {
     private ArrayList<String> getWeatherDataFromJson() {
         ArrayList<String> resultStrs = new ArrayList<>();
         while (SearchableActivity.finished == false);
-        if(SearchableActivity.unsolvedResults.size() == 0)
+        if(SearchableActivity.questionResults.size() == 0)
             return null;
         for (String element:
-                SearchableActivity.unsolvedResults) {
+                SearchableActivity.questionResults) {
             resultStrs.add(element);
         }
         return resultStrs;
@@ -53,15 +53,15 @@ public class UnsolvedTask extends AsyncTask<String,Void,ArrayList<String>> {
     @Override
     protected void onPostExecute(ArrayList<String> strings) {
         if(strings != null){
-            UnsolvedFragment.unsolvedText.setVisibility(View.INVISIBLE);
-            UnsolvedFragment.unsolvedAdapter.clear();
+            QuestionFragment.questionText.setVisibility(View.INVISIBLE);
+            QuestionFragment.questionAdapter.clear();
             for (String result:strings) {
-                UnsolvedFragment.unsolvedAdapter.add(result);
+                QuestionFragment.questionAdapter.add(result);
             }
         }
         else {
-            UnsolvedFragment.unsolvedAdapter.clear();
-            UnsolvedFragment.unsolvedText.setText("No matched Answer found");
+            QuestionFragment.questionAdapter.clear();
+            QuestionFragment.questionText.setText("No matched Answer found");
         }
     }
 }

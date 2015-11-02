@@ -95,7 +95,7 @@ public class UsersFragment extends Fragment {
 
     private void getUsers() {
         UserTask task = new UserTask();
-        task.execute("Cairo", "metric", SearchableActivity.inputQuery);
+        task.execute(SearchableActivity.inputQuery);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
