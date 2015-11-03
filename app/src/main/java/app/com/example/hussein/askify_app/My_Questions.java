@@ -74,7 +74,7 @@ public class My_Questions extends ActionBarActivity {
         if(b != null)
         user_id = b.getString("user_id");
         else
-        user_id = "essam";
+        user_id = "4";
 
         qList = new ArrayList<Map<String, String>>();
         new QuesAsyn().execute();

@@ -140,7 +140,7 @@ public class HomeActivityFragment extends Fragment implements View.OnClickListen
         private void selectItemFromDrawer(int position) {
             switch (position) {
                 case 0:
-                    Intent y =new Intent(getActivity(), MainActivity.class);
+                    Intent y =new Intent(getActivity(), HomeActivity.class);
                     Bundle b = new Bundle();
                     b.putString("user_id",user_id);
                     y.putExtras(b);
@@ -246,7 +246,7 @@ private class QuesAsyn extends AsyncTask<String,Void,ArrayList<Map<String, Strin
     @Override
     protected void onPostExecute(ArrayList<Map<String, String>> x){
         pDialog.dismiss();
-        ListAdapter simpleAdapter = new SimpleAdapter(getActivity(), x, R.layout.list_item_question, new String[]{"question",
+        ListAdapter simpleAdapter = new SimpleAdapter(getActivity(), x, R.layout.list_item_homequestion, new String[]{"question",
                 "questioner_name", "Answer"}, new int[]{R.id.question,
                 R.id.name,R.id.answer});
         ListView listView1 =(ListView) getActivity().findViewById(R.id.list);
