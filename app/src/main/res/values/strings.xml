@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Askify_App</string>
+
     <string name="action_settings">Settings</string>
     <string name="app_label">Askify_App</string>
     <string name="search_hint">Search questions or users</string>
@@ -8,4 +8,23 @@
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_view_question">ViewQuestion</string>
+    <string name="title_activity_my__questions">My_Questions</string>
+    <string name="title_activity_ask_question">AskQuestion</string>
+    <string name="app_name">Askify</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="drawer_open">Slider Menu Opened</string>
+    <string name="drawer_close">Slider Menu Closed</string>
+
+    <!-- Nav Drawer Menu Items -->
+    <string-array name="nav_drawer_items">
+        <item >Home</item>
+        <item >Profile</item>
+        <item >Your Questions</item>
+        <item >Notifications</item>
+        <item >Settings</item>
+
+    </string-array>
+    <string name="title_activity_view_my_question">ViewMyQuestion</string>
+    <string name="title_activity_edit_question">EditQuestion</string>
 </resources>

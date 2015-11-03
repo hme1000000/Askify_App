@@ -10,8 +10,10 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
-        <meta-data android:name="android.app.default_searchable"
+        <meta-data
+            android:name="android.app.default_searchable"
             android:value=".SearchableActivity" />
+
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -27,22 +29,65 @@
             android:label="@string/title_activity_home"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar" >
-
-
-
         </activity>
         <activity
             android:name=".SearchableActivity"
             android:label="Search Results"
+            android:launchMode="singleTop"
             android:parentActivityName=".HomeActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:launchMode="singleTop">
+            android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
-            <meta-data android:name="android.app.searchable"
-                android:resource="@xml/searchable"/>
 
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+        </activity>
+        <activity
+            android:name=".ViewQuestion"
+            android:label="@string/title_activity_view_question"
+            android:parentActivityName=".HomeActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="app.com.example.hussein.askify_app.HomeActivity" />
+        </activity>
+        <activity
+            android:name=".My_Questions"
+            android:label="@string/title_activity_my__questions"
+            android:parentActivityName=".HomeActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="app.com.example.hussein.askify_app.HomeActivity" />
+        </activity>
+        <activity
+            android:name=".AskQuestion"
+            android:label="@string/title_activity_ask_question"
+            android:parentActivityName=".HomeActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="app.com.example.hussein.askify_app.HomeActivity" />
+        </activity>
+        <activity
+            android:name=".ViewMyQuestion"
+            android:label="@string/title_activity_view_my_question"
+            android:parentActivityName=".HomeActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="app.com.example.hussein.askify_app.HomeActivity" />
+        </activity>
+        <activity
+            android:name=".EditQuestion"
+            android:label="@string/title_activity_edit_question"
+            android:parentActivityName=".HomeActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="app.com.example.hussein.askify_app.HomeActivity" />
         </activity>
     </application>
 

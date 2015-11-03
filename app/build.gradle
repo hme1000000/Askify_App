@@ -1,5 +1,9 @@
 apply plugin: 'com.android.application'
 
+android {
+    useLibrary 'org.apache.http.legacy'
+}
+
 dependencies {
     compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
 }
