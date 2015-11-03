@@ -9,6 +9,8 @@ import android.preference.PreferenceManager;
 import android.text.format.Time;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,6 +27,8 @@ import java.util.ArrayList;
 
 
 public class myTask extends AsyncTask<String,Void,ArrayList<String>> {
+
+    ArrayAdapter<String> myAdapter;
     private ArrayList<String> getWeatherDataFromJson() {
         ArrayList<String> resultStrs = new ArrayList<>();
         while (SearchableActivity.finished == false);
@@ -36,6 +40,13 @@ public class myTask extends AsyncTask<String,Void,ArrayList<String>> {
         }
         return resultStrs;
     }
+
+    @Override
+    protected void onPreExecute() {
+        if(myAdapter != null)
+        myAdapter.clear();
+    }
+
     @Override
     protected ArrayList<String> doInBackground(String... params) {
 
@@ -53,14 +64,22 @@ public class myTask extends AsyncTask<String,Void,ArrayList<String>> {
     @Override
     protected void onPostExecute(ArrayList<String> strings) {
         if(strings != null){
+            ListView listView = (ListView)AllFragment.rootView.findViewById(R.id.listView_All);
+            myAdapter = new ArrayAdapter<String>(AllFragment.rootView.getContext(),
+                    R.layout.list_item_forecast,
+                    R.id.list_item_forecast_textView,
+                    strings);
+            listView.setAdapter(myAdapter);
+
             AllFragment.allText.setVisibility(View.INVISIBLE);
-            AllFragment.myAdapter.clear();
-            for (String result:strings) {
-                AllFragment.myAdapter.add(result);
-            }
+            //AllFragment.myAdapter.clear();
+            //for (String result:strings) {
+                //AllFragment.myAdapter.add(result);
+           // }
         }
         else {
-            AllFragment.myAdapter.clear();
+            if(myAdapter != null)
+                myAdapter.clear();
             AllFragment.allText.setText("No matched Answer found");
         }
     }

@@ -1,18 +1,21 @@
 package app.com.example.hussein.askify_app;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -35,6 +38,7 @@ public class AnswerFragment extends Fragment {
     public static ArrayAdapter<String> answerAdapter;
     private OnFragmentInteractionListener mListener;
     public static TextView answerText;
+    public static View rootView;
 
     /**
      * Use this factory method to create a new instance of
@@ -71,7 +75,7 @@ public class AnswerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView =  inflater.inflate(R.layout.fragment_answer, container, false);
+        rootView =  inflater.inflate(R.layout.fragment_answer, container, false);
 
         List<String> myArray = new ArrayList<String>();
         answerAdapter = new ArrayAdapter<String>(getActivity(),
@@ -81,6 +85,29 @@ public class AnswerFragment extends Fragment {
 
         ListView list = (ListView)rootView.findViewById(R.id.listView_answer);
         list.setAdapter(answerAdapter);
+
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+
+                Map<String,String> mq = SearchableActivity.answerData.get(position);
+                Intent i = new Intent(rootView.getContext(), ViewQuestion.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("questioner_name", mq.get("questioner_name"));
+                bundle.putString("question", mq.get("question"));
+                bundle.putString("question_tag", mq.get("question_tag"));
+                bundle.putString("answer", mq.get("Answer"));
+                bundle.putString("user_id", "essam");
+                bundle.putString("question_date", mq.get("question_date"));
+                bundle.putString("answer_date", mq.get("Answer_date"));
+                i.putExtras(bundle);
+                startActivity(i);
+
+
+            }
+        });
         answerText = (TextView)rootView.findViewById(R.id.answer_textView);
 
         return rootView;

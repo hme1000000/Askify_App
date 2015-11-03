@@ -36,6 +36,7 @@ public class UnsolvedFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
     public static TextView unsolvedText;
+    public static View rootView;
 
     /**
      * Use this factory method to create a new instance of
@@ -72,7 +73,7 @@ public class UnsolvedFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView =  inflater.inflate(R.layout.fragment_unsolved, container, false);
+        rootView =  inflater.inflate(R.layout.fragment_unsolved, container, false);
 
         List<String> myArray = new ArrayList<String>();
         unsolvedAdapter = new ArrayAdapter<String>(getActivity(),

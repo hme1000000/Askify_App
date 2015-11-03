@@ -34,6 +34,7 @@ public class QuestionFragment extends Fragment {
     private String mParam2;
     public  static ArrayAdapter<String> questionAdapter;
     public static TextView questionText;
+    public static View rootView;
 
     private OnFragmentInteractionListener mListener;
 
@@ -70,14 +71,16 @@ public class QuestionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        rootView = inflater.inflate(R.layout.fragment_question, container, false);
+
         List<String> questionArray = new ArrayList<>();
-        questionAdapter = new ArrayAdapter<String>(getActivity(),
+        questionAdapter = new ArrayAdapter<String>(rootView.getContext(),
                 R.layout.list_item_question,
                 R.id.list_item_question_textView,
                 questionArray);
 
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_question, container, false);
+
 
         ListView questionList = (ListView)rootView.findViewById(R.id.listView_question);
         questionList.setAdapter(QuestionFragment.questionAdapter);

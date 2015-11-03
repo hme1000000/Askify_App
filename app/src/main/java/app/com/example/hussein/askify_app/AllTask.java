@@ -237,7 +237,7 @@ public class AllTask extends AsyncTask<String,Void,ArrayList<String>> {
 
     @Override
     protected void onPreExecute() {
-        AllFragment.myAdapter.clear();
+       // AllFragment.myAdapter.clear();
     }
 
     @Override

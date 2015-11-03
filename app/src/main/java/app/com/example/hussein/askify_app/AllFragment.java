@@ -34,6 +34,7 @@ public class AllFragment extends Fragment {
     private String mParam2;
     public static ArrayAdapter<String> myAdapter;
     public static TextView allText;
+    public static View rootView;
 
     private OnFragmentInteractionListener mListener;
 
@@ -72,8 +73,7 @@ public class AllFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView =  inflater.inflate(R.layout.fragment_all, container, false);
-
+        rootView =  inflater.inflate(R.layout.fragment_all, container, false);
         List<String> myArray = new ArrayList<String>();
         myAdapter = new ArrayAdapter<String>(getActivity(),
                 R.layout.list_item_forecast,

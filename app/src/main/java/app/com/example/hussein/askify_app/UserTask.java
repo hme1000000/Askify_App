@@ -9,6 +9,8 @@ import android.preference.PreferenceManager;
 import android.text.format.Time;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,6 +27,8 @@ import java.util.ArrayList;
 
 
 public class UserTask extends AsyncTask<String,Void,ArrayList<String>> {
+
+    ArrayAdapter<String> myAdapter;
     private ArrayList<String> getWeatherDataFromJson() {
         ArrayList<String> resultStrs = new ArrayList<>();
         while (SearchableActivity.finished == false);
@@ -36,6 +40,13 @@ public class UserTask extends AsyncTask<String,Void,ArrayList<String>> {
         }
         return resultStrs;
     }
+
+    @Override
+    protected void onPreExecute() {
+        if(myAdapter != null)
+            myAdapter.clear();
+    }
+
     @Override
     protected ArrayList<String> doInBackground(String... params) {
 
@@ -53,14 +64,22 @@ public class UserTask extends AsyncTask<String,Void,ArrayList<String>> {
     @Override
     protected void onPostExecute(ArrayList<String> strings) {
         if(strings != null){
+            ListView listView = (ListView)UsersFragment.rootView.findViewById(R.id.listView_users);
+            myAdapter = new ArrayAdapter<String>(UsersFragment.rootView.getContext(),
+                    R.layout.list_item_users,
+                    R.id.list_item_users_textView,
+                    strings);
+            listView.setAdapter(myAdapter);
+
             UsersFragment.usersText.setVisibility(View.INVISIBLE);
-            UsersFragment.usersAdapter.clear();
-            for (String result:strings) {
-                UsersFragment.usersAdapter.add(result);
-            }
+            //AllFragment.myAdapter.clear();
+            //for (String result:strings) {
+            //AllFragment.myAdapter.add(result);
+            // }
         }
         else {
-            UsersFragment.usersAdapter.clear();
+            if(myAdapter != null)
+                myAdapter.clear();
             UsersFragment.usersText.setText("No matched Answer found");
         }
     }

@@ -31,6 +31,7 @@ import com.astuetz.PagerSlidingTabStrip;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class SearchableActivity extends AppCompatActivity {
 
@@ -43,10 +44,15 @@ public class SearchableActivity extends AppCompatActivity {
     public static ArrayList<String> allSearch = new ArrayList<>();
 
     public static ArrayList<String> allResults = new ArrayList<>();
+    public static ArrayList<Map<String, String>> allData = new ArrayList<Map<String, String>>();
     public static ArrayList<String> questionResults = new ArrayList<>();
+    public static ArrayList<Map<String, String>> questionData = new ArrayList<Map<String, String>>();
     public static ArrayList<String> answerResults = new ArrayList<>();
+    public static ArrayList<Map<String, String>> answerData = new ArrayList<Map<String, String>>();
     public static ArrayList<String> usersResults = new ArrayList<>();
+    public static ArrayList<Map<String, String>> usersData = new ArrayList<Map<String, String>>();
     public static ArrayList<String> unsolvedResults = new ArrayList<>();
+    public static ArrayList<Map<String, String>> unsolvedData = new ArrayList<Map<String, String>>();
     public static boolean finished = false;
     // Tab titles
 
@@ -206,8 +212,21 @@ public class SearchableActivity extends AppCompatActivity {
             inputQuery = query;
             SearchTask task = new SearchTask();
             task.execute(query);
-            //AllTask task = new AllTask();
-            //task.execute("Cairo", "metric", query);
+            if(viewPager.getCurrentItem() == 0){
+            myTask task2 = new myTask();
+            task2.execute(query);}
+            else if(viewPager.getCurrentItem() == 2){
+            AnswerTask answerTask = new AnswerTask();
+            answerTask.execute(query);}
+            else if(viewPager.getCurrentItem() == 1){
+            QuestionsTask questionsTask = new QuestionsTask();
+            questionsTask.execute(query);}
+            else if(viewPager.getCurrentItem() == 4){
+            UnsolvedTask unsolvedTask = new UnsolvedTask();
+            unsolvedTask.execute(query);}
+            else if(viewPager.getCurrentItem() == 3){
+            UserTask userTask = new UserTask();
+            userTask.execute(query);}
 
             //startActivity(new Intent(this,SearchableActivity.class));
             //AllFragment.getAll();

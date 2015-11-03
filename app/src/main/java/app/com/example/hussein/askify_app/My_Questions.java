@@ -69,7 +69,13 @@ public class My_Questions extends ActionBarActivity {
         actionBar.setTitle(Html.fromHtml("<font color=\"#111111\">" + getString(R.string.app_name) + "</font>"));
 
         Bundle b = getIntent().getExtras();
+
+
+        if(b != null)
         user_id = b.getString("user_id");
+        else
+        user_id = "essam";
+
         qList = new ArrayList<Map<String, String>>();
         new QuesAsyn().execute();
     }
@@ -94,6 +100,9 @@ public class My_Questions extends ActionBarActivity {
             JSONParser jP = new JSONParser();
             String forecastJsonStr = jP.makeHttpRequest(My_Questions_URL);
             try {
+
+                if(forecastJsonStr == null)
+                    return qList;
 
                 JSONObject forecast = new JSONObject(forecastJsonStr);
                 jsonMainNode = forecast.getJSONArray("my_questions");
