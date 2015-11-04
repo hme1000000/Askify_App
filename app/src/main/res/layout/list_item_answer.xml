@@ -1,9 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:minHeight="?android:attr/listPreferredItemHeight"
-    android:gravity="center_vertical"
-    android:id="@+id/list_item_answer_textView">
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp" >
 
-</TextView>
+    <!-- questioner name Label -->
+
+    <TextView
+        android:id="@+id/nameAnswer"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="6dip"
+        android:textSize="10sp"
+
+        />
+
+    <!-- question label -->
+    <TextView
+        android:id="@+id/questionAnswer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="6dip"
+        android:textSize="18sp"
+        android:paddingTop="6dip"
+        android:textStyle="bold"
+        android:textColor="#317FDF"
+
+
+        />
+
+    <!-- Answer label -->
+    <TextView
+        android:id="@+id/answerAnswer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:textColor="#5d5d5d"
+        android:textStyle="bold"
+        android:textSize="14sp"
+        />
+
+
+
+
+</LinearLayout>

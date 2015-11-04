@@ -210,6 +210,8 @@ private class QuesAsyn extends AsyncTask<String,Void,ArrayList<Map<String, Strin
         JSONParser jP = new JSONParser();
         String forecastJsonStr = jP.makeHttpRequest(Questions_URL);
         try {
+            if(forecastJsonStr == null)
+                return qList;
 
             JSONObject forcastJson = new JSONObject(forecastJsonStr);
             jsonMainNode = forcastJson.getJSONArray("question_List");

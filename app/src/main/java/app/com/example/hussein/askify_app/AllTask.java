@@ -255,10 +255,10 @@ public class AllTask extends AsyncTask<String,Void,ArrayList<String>> {
             }
         }
         else {
-            AllFragment.myAdapter.clear();
+            //AllFragment.myAdapter.clear();
             for(int i=0;i<10;i++)
             {
-                AllFragment.myAdapter.add("Nothing");
+                //AllFragment.myAdapter.add("Nothing");
             }
         }
     }

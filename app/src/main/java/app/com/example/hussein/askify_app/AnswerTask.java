@@ -11,9 +11,13 @@ import android.preference.PreferenceManager;
 import android.text.format.Time;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,32 +34,33 @@ import java.util.ArrayList;
 import java.util.Map;
 
 
-public class AnswerTask extends AsyncTask<String,Void,ArrayList<String>> {
+public class AnswerTask extends AsyncTask<String,Void,ArrayList<Map<String, String>>> {
 
-    ArrayAdapter<String> myAdapter;
-    private ArrayList<String> getWeatherDataFromJson() {
-        ArrayList<String> resultStrs = new ArrayList<>();
+    //ArrayAdapter<String> myAdapter;
+    ListAdapter allAdapter;
+    private ArrayList<Map<String, String>> getWeatherDataFromJson() {
+        ArrayList<Map<String, String>> resultStrs = new ArrayList<Map<String, String>>();
         while (SearchableActivity.finished == false);
-        if(SearchableActivity.answerResults.size() == 0)
+        if(SearchableActivity.answerData.size() == 0)
             return null;
-        for (String element:
-                SearchableActivity.answerResults) {
+        for (Map<String,String> element:
+                SearchableActivity.answerData) {
             resultStrs.add(element);
         }
         return resultStrs;
     }
 
-    @Override
+    /*@Override
     protected void onPreExecute() {
         if(myAdapter != null)
             myAdapter.clear();
-    }
+    }*/
 
     @Override
-    protected ArrayList<String> doInBackground(String... params) {
+    protected ArrayList<Map<String, String>> doInBackground(String... params) {
 
         try {
-            ArrayList<String> result = getWeatherDataFromJson();
+            ArrayList<Map<String, String>> result = getWeatherDataFromJson();
             return result;
         }
         catch (Exception e){
@@ -66,25 +71,29 @@ public class AnswerTask extends AsyncTask<String,Void,ArrayList<String>> {
     }
 
     @Override
-    protected void onPostExecute(ArrayList<String> strings) {
+    protected void onPostExecute(ArrayList<Map<String, String>> strings) {
+        ListView listView = (ListView)AnswerFragment.rootView.findViewById(R.id.listView_answer);
         if(strings != null){
-            ListView listView = (ListView)AnswerFragment.rootView.findViewById(R.id.listView_answer);
-            myAdapter = new ArrayAdapter<String>(AnswerFragment.rootView.getContext(),
+            //ListView listView = (ListView)AnswerFragment.rootView.findViewById(R.id.listView_answer);
+            /*myAdapter = new ArrayAdapter<String>(AnswerFragment.rootView.getContext(),
                     R.layout.list_item_answer,
                     R.id.list_item_answer_textView,
-                    strings);
-            listView.setAdapter(myAdapter);
-
-
+                    strings);*/
+            allAdapter = new SimpleAdapter(AnswerFragment.rootView.getContext(),strings,
+                    R.layout.list_item_answer, new String[]{"question",
+                    "questioner_name", "Answer"}, new int[]{R.id.questionAnswer,
+                    R.id.nameAnswer,R.id.answerAnswer});
+            listView.setAdapter(allAdapter);
             AnswerFragment.answerText.setVisibility(View.INVISIBLE);
+            listView.setVisibility(View.VISIBLE);
             //AllFragment.myAdapter.clear();
             //for (String result:strings) {
             //AllFragment.myAdapter.add(result);
             // }
         }
         else {
-            if(myAdapter != null)
-                myAdapter.clear();
+            listView.setVisibility(View.INVISIBLE);
+            AnswerFragment.answerText.setVisibility(View.VISIBLE);
             AnswerFragment.answerText.setText("No matched Answer found");
         }
     }

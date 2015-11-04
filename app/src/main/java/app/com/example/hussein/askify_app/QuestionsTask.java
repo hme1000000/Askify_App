@@ -10,7 +10,9 @@ import android.text.format.Time;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,34 +26,31 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Map;
 
 
-public class QuestionsTask extends AsyncTask<String,Void,ArrayList<String>> {
+public class QuestionsTask extends AsyncTask<String,Void,ArrayList<Map<String, String>>> {
 
-    ArrayAdapter<String> myAdapter;
-    private ArrayList<String> getWeatherDataFromJson() {
-        ArrayList<String> resultStrs = new ArrayList<>();
+    ListAdapter myAdapter;
+    private ArrayList<Map<String, String>> getWeatherDataFromJson() {
+        ArrayList<Map<String, String>> resultStrs = new ArrayList<Map<String, String>>();
         while (SearchableActivity.finished == false);
-        if(SearchableActivity.questionResults.size() == 0)
+        if(SearchableActivity.questionData.size() == 0)
             return null;
-        for (String element:
-                SearchableActivity.questionResults) {
+        for (Map<String,String> element:
+                SearchableActivity.questionData) {
             resultStrs.add(element);
         }
         return resultStrs;
     }
 
-    @Override
-    protected void onPreExecute() {
-        if(myAdapter != null)
-            myAdapter.clear();
-    }
+
 
     @Override
-    protected ArrayList<String> doInBackground(String... params) {
+    protected ArrayList<Map<String, String>> doInBackground(String... params) {
 
         try {
-            ArrayList<String> result = getWeatherDataFromJson();
+            ArrayList<Map<String, String>> result = getWeatherDataFromJson();
             return result;
         }
         catch (Exception e){
@@ -62,25 +61,27 @@ public class QuestionsTask extends AsyncTask<String,Void,ArrayList<String>> {
     }
 
     @Override
-    protected void onPostExecute(ArrayList<String> strings) {
+    protected void onPostExecute(ArrayList<Map<String, String>> strings) {
+        ListView listView = (ListView)QuestionFragment.rootView.findViewById(R.id.listView_question);
         if(strings != null){
-            ListView listView = (ListView)QuestionFragment.rootView.findViewById(R.id.listView_question);
-            myAdapter = new ArrayAdapter<String>(QuestionFragment.rootView.getContext(),
-                    R.layout.list_item_question,
-                    R.id.list_item_question_textView,
-                    strings);
+
+            myAdapter = new SimpleAdapter(QuestionFragment.rootView.getContext(),strings,
+                    R.layout.list_item_homequestion, new String[]{"question",
+                    "questioner_name", "Answer"}, new int[]{R.id.question,
+                    R.id.name,R.id.answer});
             listView.setAdapter(myAdapter);
 
             QuestionFragment.questionText.setVisibility(View.INVISIBLE);
+            listView.setVisibility(View.VISIBLE);
             //AllFragment.myAdapter.clear();
             //for (String result:strings) {
             //AllFragment.myAdapter.add(result);
             // }
         }
         else {
-            if(myAdapter != null)
-                myAdapter.clear();
-            QuestionFragment.questionText.setText("No matched Answer found");
+            listView.setVisibility(View.INVISIBLE);
+            QuestionFragment.questionText.setVisibility(View.VISIBLE);
+            QuestionFragment.questionText.setText("No matched Question found");
         }
     }
 }

@@ -1,18 +1,23 @@
 package app.com.example.hussein.askify_app;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -32,7 +37,7 @@ public class UnsolvedFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    public static ArrayAdapter<String> unsolvedAdapter;
+    private ListAdapter myAdapter;
 
     private OnFragmentInteractionListener mListener;
     public static TextView unsolvedText;
@@ -75,14 +80,36 @@ public class UnsolvedFragment extends Fragment {
         // Inflate the layout for this fragment
         rootView =  inflater.inflate(R.layout.fragment_unsolved, container, false);
 
-        List<String> myArray = new ArrayList<String>();
-        unsolvedAdapter = new ArrayAdapter<String>(getActivity(),
-                R.layout.list_item_unsolved,
-                R.id.list_item_unsolved_textView,
-                myArray);
+        ArrayList<Map<String, String>> myArray = new ArrayList<Map<String, String>>();
+        myAdapter = new SimpleAdapter(rootView.getContext(), myArray, R.layout.list_item_unsolved, new String[]{"question",
+                "questioner_name", "Answer"}, new int[]{R.id.questionUnsolved,
+                R.id.nameUnsolved,R.id.answerUnsolved});
+        ListView listView1 =(ListView) rootView.findViewById(R.id.listView_unsolved);
+        //listView1.setAdapter(myAdapter);
 
-        ListView list = (ListView)rootView.findViewById(R.id.listView_unsolved);
-        list.setAdapter(unsolvedAdapter);
+        listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+
+                String item = parent.getItemAtPosition(position).toString();
+                Map<String, String> mq = SearchableActivity.unsolvedData.get(position);
+                Intent i = new Intent(getActivity(), ViewQuestion.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("questioner_name", mq.get("questioner_name"));
+                bundle.putString("question", mq.get("question"));
+                bundle.putString("question_tag", mq.get("question_tag"));
+                bundle.putString("answer", mq.get("Answer"));
+                bundle.putString("user_id", HomeActivity.userID);
+                bundle.putString("question_date", mq.get("question_date"));
+                bundle.putString("answer_date", mq.get("Answer_date"));
+                i.putExtras(bundle);
+                startActivity(i);
+
+
+            }
+        });
         unsolvedText = (TextView)rootView.findViewById(R.id.unsolved_textView);
 
         return rootView;
@@ -90,8 +117,15 @@ public class UnsolvedFragment extends Fragment {
 
     @Override
     public void onStart() {
-        super.onStart();
         getUnsolved();
+        super.onStart();
+
+    }
+
+    @Override
+    public void onResume() {
+        getUnsolved();
+        super.onResume();
     }
 
     private void getUnsolved() {

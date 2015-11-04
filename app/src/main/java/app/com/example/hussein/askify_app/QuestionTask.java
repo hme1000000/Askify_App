@@ -240,13 +240,13 @@ public class QuestionTask extends AsyncTask<String,Void,ArrayList<String>> {
     protected void onPostExecute(ArrayList<String> strings) {
         if(strings != null){
             QuestionFragment.questionText.setVisibility(View.INVISIBLE);
-            QuestionFragment.questionAdapter.clear();
+            //QuestionFragment.questionAdapter.clear();
             for (String result:strings) {
-                QuestionFragment.questionAdapter.add(result);
+              //  QuestionFragment.questionAdapter.add(result);
             }
         }
         else {
-            QuestionFragment.questionAdapter.clear();
+            //QuestionFragment.questionAdapter.clear();
             QuestionFragment.questionText.setText("No matched Question found");
         }
     }

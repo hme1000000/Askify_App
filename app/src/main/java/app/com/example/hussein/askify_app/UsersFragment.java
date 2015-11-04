@@ -1,18 +1,23 @@
 package app.com.example.hussein.askify_app;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -32,7 +37,7 @@ public class UsersFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    public static ArrayAdapter<String> usersAdapter;
+    private ListAdapter myAdapter;
 
     private OnFragmentInteractionListener mListener;
     public static TextView usersText;
@@ -75,14 +80,36 @@ public class UsersFragment extends Fragment {
         // Inflate the layout for this fragment
         rootView =  inflater.inflate(R.layout.fragment_users, container, false);
 
-        List<String> myArray = new ArrayList<String>();
-        usersAdapter = new ArrayAdapter<String>(getActivity(),
-                R.layout.list_item_users,
-                R.id.list_item_users_textView,
-                myArray);
+        ArrayList<Map<String, String>> myArray = new ArrayList<Map<String, String>>();
+        myAdapter = new SimpleAdapter(rootView.getContext(), myArray, R.layout.list_item_users, new String[]{"question",
+                "questioner_name", "Answer"}, new int[]{R.id.questionUsers,
+                R.id.nameUsers,R.id.answerUsers});
+        ListView listView1 =(ListView) rootView.findViewById(R.id.listView_users);
+        //listView1.setAdapter(myAdapter);
 
-        ListView list = (ListView)rootView.findViewById(R.id.listView_users);
-        list.setAdapter(usersAdapter);
+        listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+
+                String item = parent.getItemAtPosition(position).toString();
+                Map<String, String> mq = SearchableActivity.usersData.get(position);
+                Intent i = new Intent(getActivity(), ViewQuestion.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("questioner_name", mq.get("questioner_name"));
+                bundle.putString("question", mq.get("question"));
+                bundle.putString("question_tag", mq.get("question_tag"));
+                bundle.putString("answer", mq.get("Answer"));
+                bundle.putString("user_id", HomeActivity.userID);
+                bundle.putString("question_date", mq.get("question_date"));
+                bundle.putString("answer_date", mq.get("Answer_date"));
+                i.putExtras(bundle);
+                startActivity(i);
+
+
+            }
+        });
         usersText = (TextView)rootView.findViewById(R.id.users_textView);
 
         return rootView;
@@ -90,8 +117,15 @@ public class UsersFragment extends Fragment {
 
     @Override
     public void onStart() {
-        super.onStart();
         getUsers();
+        super.onStart();
+
+    }
+
+    @Override
+    public void onResume() {
+        getUsers();
+        super.onResume();
     }
 
     private void getUsers() {

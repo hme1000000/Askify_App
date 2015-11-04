@@ -5,12 +5,16 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -35,7 +39,7 @@ public class AnswerFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    public static ArrayAdapter<String> answerAdapter;
+    private ListAdapter myAdapter;
     private OnFragmentInteractionListener mListener;
     public static TextView answerText;
     public static View rootView;
@@ -77,29 +81,28 @@ public class AnswerFragment extends Fragment {
         // Inflate the layout for this fragment
         rootView =  inflater.inflate(R.layout.fragment_answer, container, false);
 
-        List<String> myArray = new ArrayList<String>();
-        answerAdapter = new ArrayAdapter<String>(getActivity(),
-                R.layout.list_item_answer,
-                R.id.list_item_answer_textView,
-                myArray);
+        ArrayList<Map<String, String>> myArray = new ArrayList<Map<String, String>>();
+        myAdapter = new SimpleAdapter(rootView.getContext(), myArray, R.layout.list_item_answer, new String[]{"question",
+                "questioner_name", "Answer"}, new int[]{R.id.questionAnswer,
+                R.id.nameAnswer,R.id.answerAnswer});
+        ListView listView1 =(ListView) rootView.findViewById(R.id.listView_answer);
+        //listView1.setAdapter(myAdapter);
 
-        ListView list = (ListView)rootView.findViewById(R.id.listView_answer);
-        list.setAdapter(answerAdapter);
-
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
 
-                Map<String,String> mq = SearchableActivity.answerData.get(position);
-                Intent i = new Intent(rootView.getContext(), ViewQuestion.class);
+                String item = parent.getItemAtPosition(position).toString();
+                Map<String, String> mq = SearchableActivity.answerData.get(position);
+                Intent i = new Intent(getActivity(), ViewQuestion.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("questioner_name", mq.get("questioner_name"));
                 bundle.putString("question", mq.get("question"));
                 bundle.putString("question_tag", mq.get("question_tag"));
                 bundle.putString("answer", mq.get("Answer"));
-                bundle.putString("user_id", "essam");
+                bundle.putString("user_id", HomeActivity.userID);
                 bundle.putString("question_date", mq.get("question_date"));
                 bundle.putString("answer_date", mq.get("Answer_date"));
                 i.putExtras(bundle);
@@ -115,8 +118,15 @@ public class AnswerFragment extends Fragment {
 
     @Override
     public void onStart() {
-        super.onStart();
         getAnswers();
+        super.onStart();
+
+    }
+
+    @Override
+    public void onResume() {
+        getAnswers();
+        super.onResume();
     }
 
     private void getAnswers() {

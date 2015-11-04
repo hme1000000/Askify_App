@@ -10,7 +10,9 @@ import android.text.format.Time;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,34 +26,31 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Map;
 
 
-public class myTask extends AsyncTask<String,Void,ArrayList<String>> {
+public class myTask extends AsyncTask<String,Void,ArrayList<Map<String, String>>> {
 
-    ArrayAdapter<String> myAdapter;
-    private ArrayList<String> getWeatherDataFromJson() {
-        ArrayList<String> resultStrs = new ArrayList<>();
+    ListAdapter myAdapter;
+    private ArrayList<Map<String, String>> getWeatherDataFromJson() {
+        ArrayList<Map<String, String>> resultStrs = new ArrayList<Map<String, String>>();
         while (SearchableActivity.finished == false);
-        if(SearchableActivity.allResults.size() == 0)
+        if(SearchableActivity.allData.size() == 0)
             return null;
-        for (String element:
-                SearchableActivity.allResults) {
+        for (Map<String,String>element:
+                SearchableActivity.allData) {
             resultStrs.add(element);
         }
         return resultStrs;
     }
 
-    @Override
-    protected void onPreExecute() {
-        if(myAdapter != null)
-        myAdapter.clear();
-    }
+
 
     @Override
-    protected ArrayList<String> doInBackground(String... params) {
+    protected ArrayList<Map<String, String>> doInBackground(String... params) {
 
         try {
-            ArrayList<String> result = getWeatherDataFromJson();
+            ArrayList<Map<String, String>> result = getWeatherDataFromJson();
             return result;
         }
         catch (Exception e){
@@ -62,25 +61,28 @@ public class myTask extends AsyncTask<String,Void,ArrayList<String>> {
     }
 
     @Override
-    protected void onPostExecute(ArrayList<String> strings) {
+    protected void onPostExecute(ArrayList<Map<String, String>> strings) {
+        ListView listView = (ListView)AllFragment.rootView.findViewById(R.id.listView_All);
         if(strings != null){
-            ListView listView = (ListView)AllFragment.rootView.findViewById(R.id.listView_All);
-            myAdapter = new ArrayAdapter<String>(AllFragment.rootView.getContext(),
-                    R.layout.list_item_forecast,
-                    R.id.list_item_forecast_textView,
-                    strings);
+
+            myAdapter = new SimpleAdapter(AllFragment.rootView.getContext(),strings,
+                    R.layout.list_item_homequestion, new String[]{"question",
+                    "questioner_name", "Answer"}, new int[]{R.id.question,
+                    R.id.name,R.id.answer});
+
             listView.setAdapter(myAdapter);
 
             AllFragment.allText.setVisibility(View.INVISIBLE);
+            listView.setVisibility(View.VISIBLE);
             //AllFragment.myAdapter.clear();
             //for (String result:strings) {
                 //AllFragment.myAdapter.add(result);
            // }
         }
         else {
-            if(myAdapter != null)
-                myAdapter.clear();
-            AllFragment.allText.setText("No matched Answer found");
+            listView.setVisibility(View.INVISIBLE);
+            AllFragment.allText.setVisibility(View.VISIBLE);
+            AllFragment.allText.setText("No matched Result found");
         }
     }
 }
