@@ -40,8 +40,11 @@ public class ViewMyQuestion extends AppCompatActivity implements View.OnClickLis
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(ViewMyQuestion.this, NotificationActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("user_id", HomeActivity.userID);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

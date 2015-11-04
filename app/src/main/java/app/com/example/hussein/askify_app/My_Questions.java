@@ -61,20 +61,20 @@ public class My_Questions extends ActionBarActivity {
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        final android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        /*final android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setCustomView(R.layout.actionbar_custom_view_home);
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFFFFF")));
         actionBar.setTitle(Html.fromHtml("<font color=\"#111111\">" + getString(R.string.app_name) + "</font>"));
-
+*/
         Bundle b = getIntent().getExtras();
 
 
-        if(b != null)
+        //if(b != null)
         user_id = b.getString("user_id");
-        else
-        user_id = "4";
+        //else
+        //user_id = "4";
 
         qList = new ArrayList<Map<String, String>>();
         new QuesAsyn().execute();

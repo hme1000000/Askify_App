@@ -1,5 +1,6 @@
 package app.com.example.hussein.askify_app;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -25,19 +26,17 @@ public class ViewQuestion extends ActionBarActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(ViewQuestion.this, NotificationActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("user_id", HomeActivity.userID);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-        final android.support.v7.app.ActionBar actionBar = getSupportActionBar();
-        actionBar.setCustomView(R.layout.actionbar_custom_view_home);
-        actionBar.setDisplayShowTitleEnabled(false);
-        actionBar.setDisplayShowCustomEnabled(true);
-        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFFFFF")));
-        actionBar.setTitle(Html.fromHtml("<font color=\"#111111\">" + getString(R.string.app_name) + "</font>"));
+
 
         q_name=(TextView)findViewById(R.id.Ques_name);
         q=(TextView)findViewById(R.id.Ques);

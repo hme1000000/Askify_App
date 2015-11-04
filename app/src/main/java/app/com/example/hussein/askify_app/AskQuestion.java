@@ -57,7 +57,7 @@ public class AskQuestion extends ActionBarActivity implements View.OnClickListen
         Bundle b = getIntent().getExtras();
         user_id = b.getString("user_id");
         AskQ = (EditText) findViewById(R.id.ask_question);
-        AskQ_result = AskQ.getText().toString();
+
 
         AskButton = (Button) findViewById(R.id.button_ask);
         AskButton.setOnClickListener(this);
@@ -68,12 +68,15 @@ public class AskQuestion extends ActionBarActivity implements View.OnClickListen
     @Override
     public void onClick (View v){
         if (v.getId() == R.id.button_ask) {
+            newQuestion = AskQ.getText().toString();
             //if(newQuestion.length()>10 && newQuestion.length()<255){
             new AskAsync().execute();
-            Intent i = new Intent(this,My_Questions.class);
-
-            startActivity(i);
-            //else{Toast.makeText(AskQuestion.this,"Error Enter yor Question",Toast.LENGTH_LONG).show();}
+            Intent j = new Intent(this,My_Questions.class);
+            Bundle x = new Bundle();
+            x.putString("user_id", user_id);
+            j.putExtras(x);
+            startActivity(j);
+             //else{Toast.makeText(AskQuestion.this,"Error Enter yor Question",Toast.LENGTH_LONG).show();}
 
         }
 
@@ -107,9 +110,9 @@ public class AskQuestion extends ActionBarActivity implements View.OnClickListen
         @Override
         protected String doInBackground(String... args) {
 
-            newQuestion = AskQ_result;
+
             Map<String,Object> params = new LinkedHashMap<>();
-            params.put("user_id", user_id);
+            params.put("user_id", "5");
             params.put("question", newQuestion );
             params.put("private", Private);
             StringBuilder postData = new StringBuilder();

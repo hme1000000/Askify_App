@@ -1,5 +1,6 @@
 package app.com.example.hussein.askify_app;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -42,8 +43,11 @@ public class EditQuestion extends AppCompatActivity implements View.OnClickListe
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(EditQuestion.this, NotificationActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("user_id", HomeActivity.userID);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -57,7 +61,6 @@ public class EditQuestion extends AppCompatActivity implements View.OnClickListe
 
         ask_text = (EditText) findViewById(R.id.Edit_text);
         ask_text.setText(ques);
-        ask_result = ask_text.getText().toString();
 
         edit = (Button) findViewById(R.id.Edit_button);
         edit.setOnClickListener(this);
@@ -67,7 +70,7 @@ public class EditQuestion extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.Edit_button) {
-
+            EditedQuestion = ask_text.getText().toString();
             new EditAsync().execute();
        /*   Intent j = new Intent(this, My_Questions.class);
             Bundle x = new Bundle();
@@ -105,9 +108,10 @@ public class EditQuestion extends AppCompatActivity implements View.OnClickListe
         String postDataBytes;
         String Edit_URL = "http://askify-app.herokuapp.com/public/api/question/edit";
         String error;
+
         @Override
         protected String doInBackground(String... args) {
-            EditedQuestion = ask_result;
+
             Map<String, Object> params = new LinkedHashMap<>();
             params.put("user_id", user_id);
             params.put("question", EditedQuestion);
@@ -138,12 +142,12 @@ public class EditQuestion extends AppCompatActivity implements View.OnClickListe
 
         @Override
         protected void onPostExecute (String error){
-            Toast.makeText(EditQuestion.this,error, Toast.LENGTH_LONG).show();
-                /*if (error.equals("false")) {
+            //Toast.makeText(EditQuestion.this,error, Toast.LENGTH_LONG).show();
+                if (error.equals("false")) {
                     Toast.makeText(EditQuestion.this,"Your Question has been edited successfully", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(EditQuestion.this,"Your Question failed. Please edit your question again", Toast.LENGTH_LONG).show();
-                }*/
+                }
         }//end of onPostExecute
 
     }//end of EditAsync

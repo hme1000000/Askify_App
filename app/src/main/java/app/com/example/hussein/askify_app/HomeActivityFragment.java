@@ -57,7 +57,7 @@ public class HomeActivityFragment extends Fragment implements View.OnClickListen
     String ques_date;
     /***************For Ask*************************/
     private Button AskButton;
-    String user_id="4"; //user_id from login
+    String user_id="5"; //user_id from login
 
     public HomeActivityFragment() {
     }
