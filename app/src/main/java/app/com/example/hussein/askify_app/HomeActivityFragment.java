@@ -48,6 +48,7 @@ public class HomeActivityFragment extends Fragment implements View.OnClickListen
     private ProgressDialog pDialog;
     ArrayList<Map<String, String>> qList;
     String Questions_URL = "http://askify-app.herokuapp.com/public/api/questionlist/all";
+    String Notifications_URL = "http://askify-app.herokuapp.com/public/api/notificationsToUser/";
     String name ;
     String q ;
     String ans;
@@ -158,6 +159,11 @@ public class HomeActivityFragment extends Fragment implements View.OnClickListen
                     startActivity(x);
                     break;
                 case 3:
+                    Intent intent =new Intent(getActivity(), NotificationActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("user_id",HomeActivity.userID);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
 
                     break;
                 case 4:

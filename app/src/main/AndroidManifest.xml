@@ -89,6 +89,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="app.com.example.hussein.askify_app.HomeActivity" />
         </activity>
+        <activity
+            android:name=".NotificationActivity"
+            android:parentActivityName=".HomeActivity"
+            android:label="Notifications"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
     </application>
 
 </manifest>

@@ -27,4 +27,5 @@
     </string-array>
     <string name="title_activity_view_my_question">ViewMyQuestion</string>
     <string name="title_activity_edit_question">EditQuestion</string>
+    <string name="title_activity_notification">NotificationActivity</string>
 </resources>
