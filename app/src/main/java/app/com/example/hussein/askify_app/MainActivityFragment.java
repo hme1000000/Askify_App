@@ -21,7 +21,7 @@ public class MainActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-        Button btn_home = (Button)rootView.findViewById(R.id.button);
+        kmkmkButton btn_home = (Button)rootView.findViewById(R.id.button);
         btn_home.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
