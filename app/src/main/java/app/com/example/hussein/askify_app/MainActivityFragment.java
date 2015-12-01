@@ -4,12 +4,19 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -39,15 +46,10 @@ public class MainActivityFragment extends Fragment {
     EditText un, pw;
     TextView error;
     Button ok;
-    private String resp;
-    private String errorMsg;
     String username;
     String password;
-    String forecastJsonStr;
-    String postDataBytes;
-    String Login_URL = "http://askify-app.herokuapp.com/public/api/user/login";
-    int success;
-    int userid;
+    public static int success = 0;
+    public static boolean finish = false;
     public MainActivityFragment() {
     }
 
@@ -65,11 +67,34 @@ public class MainActivityFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-
+                ok.setEnabled(false);
                 username = un.getText().toString();
                 password = pw.getText().toString();
-                Map<String,Object> params = new LinkedHashMap<>();
-                params.put("username", username);
+                new LoginTask().execute(username,password);
+                while (!finish);
+                if (success == 1) {
+                    Intent intent = new Intent(getActivity(),HomeActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("user_id",LoginTask.user_id);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }else {
+                    Toast.makeText(rootView.getContext(), "username or password is wrong, please try again", Toast.LENGTH_LONG).show();
+                }
+
+
+                /*Intent x =new Intent(rootView.getContext(), HomeActivity.class);
+                Bundle bun = new Bundle();
+                bun.putInt("user_id",LoginTask.user_id);
+                x.putExtras(bun);
+                startActivity(x);
+                //Map<String,Object> params = new LinkedHashMap<>();
+                //userid = 5;
+                //while (!username.equals("hhh"));
+                /*Intent intent = new Intent(rootView.getContext(),HomeActivity.class);
+                startActivity(intent);
+
+                /*params.put("username", username);
                 params.put("password", password );
                 StringBuilder postData = new StringBuilder();
                 for (Map.Entry<String,Object> param : params.entrySet()) {
@@ -82,11 +107,51 @@ public class MainActivityFragment extends Fragment {
                     } catch (UnsupportedEncodingException e1) {
                         e1.printStackTrace();
                     }
-                }
+                }*/
+                /*Login_URL += "?username="+username+"&password="+password;
 
                 try {
-                    JSONParser jP = new JSONParser();
-                    forecastJsonStr = jP.excutePost(Login_URL, postDataBytes);
+                    HttpURLConnection urlConnection = null;
+                    BufferedReader reader = null;
+                    try {
+                        String urlString = Login_URL;
+                        URL url = new URL(urlString);
+                        urlConnection = (HttpURLConnection) url.openConnection();
+                        urlConnection.setRequestMethod("GET");
+                        urlConnection.connect();
+
+                        InputStream inputStream = urlConnection.getInputStream();
+                        StringBuffer buffer = new StringBuffer();
+                        if (inputStream == null) {
+                            success = 0;
+                        }
+                        reader = new BufferedReader(new InputStreamReader(inputStream));
+
+                        String line;
+                        while ((line = reader.readLine()) != null) {
+                            buffer.append(line + "\n");
+                        }
+
+                        if (buffer.length() == 0) {
+                            success = 0;
+                        }
+                        forecastJsonStr = buffer.toString();
+
+                    } catch (IOException e) {
+                        success = 0;
+                    } finally{
+                        if (urlConnection != null) {
+                            urlConnection.disconnect();
+                        }
+                        if (reader != null) {
+                            try {
+                                reader.close();
+                            } catch (final IOException e) {
+                                success = 0;
+                            }
+                        }
+                    }
+                    //forecastJsonStr = jP.makeHttpRequest(Login_URL);
                     if(forecastJsonStr != null) {
                         JSONObject forecast = new JSONObject(forecastJsonStr);
                         success = forecast.getInt("success");
@@ -148,6 +213,7 @@ public class MainActivityFragment extends Fragment {
                 } catch (Exception e) {
                     error.setText(e.getMessage());
                 }*/
+                ok.setEnabled(true);
             }
         });
 

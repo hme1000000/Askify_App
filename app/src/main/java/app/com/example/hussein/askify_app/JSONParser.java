@@ -48,7 +48,7 @@ public class JSONParser {
             // Create the request to OpenWeatherMap, and open the connection
             urlConnection = (HttpURLConnection) x.openConnection();
             urlConnection.setRequestMethod("GET");
-            urlConnection.connect();
+           urlConnection.connect();
 
             // Read the input stream into a String
             InputStream inputStream = urlConnection.getInputStream();

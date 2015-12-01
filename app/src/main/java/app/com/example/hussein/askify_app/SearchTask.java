@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Created by hussein on 19/10/15.
+ * Created by hussein on 19/10/15.-
  */
 public class SearchTask extends AsyncTask<String,Void,String> {
     private final String Log_Tag = myTask.class.getSimpleName();
