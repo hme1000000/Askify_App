@@ -71,7 +71,7 @@ import java.util.Map;
 
 public class HomeActivity extends AppCompatActivity {
 
-    public static String userID  = "12";
+    public static String userID  = "";
     public static String username = "hassan";
 
 
@@ -79,6 +79,12 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Bundle b = getIntent().getExtras();
+        if(b != null) {
+            userID = b.getString("user_id");
+            //HomeActivityFragment.user_id = b.getString("user_id");
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

@@ -32,6 +32,8 @@ public class LoginTask extends AsyncTask<String,Void,String>  {
         if(resultint == 1)
         {
             user_id = result.getInt("user_id");
+            HomeActivity.userID = String.valueOf(result.getInt("user_id"));
+            Log.e("ID","ID+++++++++++++"+HomeActivity.userID);
             return "success";
         }
         else {
@@ -89,7 +91,14 @@ public class LoginTask extends AsyncTask<String,Void,String>  {
         }
         try {
             String result =getAnswerFromJson(urlresult);
-            MainActivityFragment.success = 1;
+            if(result.equals("success"))
+            {
+                MainActivityFragment.success = 1;
+            }
+            else
+            {
+                MainActivityFragment.success = 0;
+            }
             MainActivityFragment.finish = true;
             return result;
         }

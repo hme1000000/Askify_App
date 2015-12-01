@@ -57,7 +57,7 @@ public class HomeActivityFragment extends Fragment implements View.OnClickListen
     String ques_date;
     /***************For Ask*************************/
     private Button AskButton;
-    String user_id="5"; //user_id from login
+    //public static String user_id=""; //user_id from login
 
     public HomeActivityFragment() {
     }
@@ -66,6 +66,7 @@ public class HomeActivityFragment extends Fragment implements View.OnClickListen
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+
 
 
 
@@ -143,7 +144,7 @@ public class HomeActivityFragment extends Fragment implements View.OnClickListen
                 case 0:
                     Intent y =new Intent(getActivity(), HomeActivity.class);
                     Bundle b = new Bundle();
-                    b.putString("user_id",user_id);
+                    b.putString("user_id",HomeActivity.userID);
                     y.putExtras(b);
                     startActivity(y);
                     break;
@@ -154,7 +155,7 @@ public class HomeActivityFragment extends Fragment implements View.OnClickListen
                 case 2:
                     Intent x =new Intent(getActivity(), My_Questions.class);
                     Bundle bun = new Bundle();
-                    bun.putString("user_id",user_id);
+                    bun.putString("user_id",HomeActivity.userID);
                     x.putExtras(bun);
                     startActivity(x);
                     break;
@@ -183,7 +184,7 @@ public class HomeActivityFragment extends Fragment implements View.OnClickListen
                 //new AskAsync().execute();
                 Intent i = new Intent(getActivity(),AskQuestion.class);
                 Bundle qbundle = new Bundle();
-                qbundle.putString("user_id",user_id);
+                qbundle.putString("user_id",HomeActivity.userID);
                 i.putExtras(qbundle);
                 startActivity(i);
             }
@@ -274,7 +275,7 @@ private class QuesAsyn extends AsyncTask<String,Void,ArrayList<Map<String, Strin
                 bundle.putString("question",mq.get("question"));
                 bundle.putString("question_tag",mq.get("question_tag"));
                 bundle.putString("answer",mq.get("Answer"));
-                bundle.putString("user_id",user_id);
+                bundle.putString("user_id",HomeActivity.userID);
                 bundle.putString("question_date",mq.get("question_date"));
                 bundle.putString("answer_date",mq.get("Answer_date"));
                 i.putExtras(bundle);

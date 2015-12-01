@@ -73,6 +73,7 @@ public class MainActivityFragment extends Fragment {
                 new LoginTask().execute(username,password);
                 while (!finish);
                 if (success == 1) {
+                    //HomeActivity.userID = String.valueOf(LoginTask.user_id);
                     Intent intent = new Intent(getActivity(),HomeActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putInt("user_id",LoginTask.user_id);

@@ -34,7 +34,7 @@ import java.util.Map;
 public class NotificationActivity extends AppCompatActivity {
 
     String username;
-    String user_id;
+    //String user_id;
     String id ; //question_id returned from json
     String ques_tag=""; //question_tag returned from json
     String ques; //question returned from json
@@ -97,7 +97,7 @@ public class NotificationActivity extends AppCompatActivity {
             HttpURLConnection urlConnection = null;
             BufferedReader reader = null;
             try {
-                String urlString = My_Questions_URL+"12";
+                String urlString = My_Questions_URL+HomeActivity.userID;
                 URL url = new URL(urlString);
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");

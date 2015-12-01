@@ -62,7 +62,7 @@ public class ViewMyQuestion extends AppCompatActivity implements View.OnClickLis
         String ques_date = bundle.getString("question_date");
         String ans_date = bundle.getString("answer_date");
         ques_id = bundle.getString("question_id");
-        user_id=bundle.getString("user_id");
+        user_id=HomeActivity.userID;
         solved=bundle.getString("solved");
 
         a.setText(ans);

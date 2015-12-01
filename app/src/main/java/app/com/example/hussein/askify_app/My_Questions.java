@@ -72,7 +72,7 @@ public class My_Questions extends ActionBarActivity {
 
 
         //if(b != null)
-        user_id = b.getString("user_id");
+        user_id = HomeActivity.userID;
         //else
         //user_id = "4";
 
